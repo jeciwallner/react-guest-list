@@ -4,11 +4,11 @@ import logo from './images/pumpkin.png';
 
 function App() {
   const [formInput, setFormInput] = useState('');
-
+  const [buttonClicked, setButtonClicked] = useState(false);
   const handleChange = (e) => {
     setFormInput(e.target.value);
   };
-
+  const [coming, setComing] = useState(false);
   const initialList = [];
   return (
     <div className="App">
@@ -27,14 +27,28 @@ function App() {
           <input type="text" value={formInput} onChange={handleChange} />
         </label>
         <label>
-          I'm coming: <input />
+          Are you coming?
+          <input
+            type="checkbox"
+            // 2. Connect the state variable to the controlled component
+            checked={coming}
+            // 3. Change the state variable when the user interacts
+            onChange={(event) => setComing(event.currentTarget.checked)}
+          />
         </label>
-        <label>
+        {buttonClicked && (
+          <div>
+            Your answer:{' '}
+            {coming ? 'Yes, of course!' : 'Sorry, I am hanging somewhere else.'}
+          </div>
+        )}
+        {/* event listener to trigger onCLick  */}
+        {/* <label>
           I'm bringing someone: <input />
         </label>
         <label>
           I'm bringing something: <input />
-        </label>
+        </label> */}
       </form>
       <h5>First Name: {formInput}</h5>
       <h5>Last Name: {formInput}</h5>
