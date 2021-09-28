@@ -1,21 +1,22 @@
 import './App.css';
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import logo from './images/pumpkin.png';
 
-const fakeGuest = [
+const newGuest = [
   { firstName: 'Johanna', lastName: 'Hume', coming: true },
-  { firstName: 'José', lastName: 'Hower', coming: false },
+  { firstName: 'Verena', lastName: 'Jungk', coming: true },
   { firstName: 'Michael', lastName: 'Wallner', coming: true },
 ];
 
 // export default App;
 
-export default function App() {
+export default function App(props) {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
 
   // create a state with a hook:
-  const [guestList, setGuestList] = useState(fakeGuest);
+  const [guestList, setGuestList] = useState(newGuest);
 
   const handleChangeFirst = (event) => {
     const updatedFirstName = event.target.value;
@@ -28,6 +29,16 @@ export default function App() {
   };
   const [coming, setComing] = useState('');
   const initialList = [];
+
+  const fetchGuests = async () => {
+    const res = await axios.get(
+      'https://github.com/upleveled/express-guest-list-api-memory-data-store',
+    );
+    setGuestList(res.data);
+  };
+  useEffect(() => {
+    fetchGuests();
+  }, []);
   return (
     <div className="App">
       <header
@@ -49,11 +60,11 @@ export default function App() {
       <div className="App-form">
         <label>
           First Name: <input value={firstName} onChange={handleChangeFirst} />
-          <p>Is that right? {firstName}</p>
+          {/* <p>Is that right? {firstName}</p> */}
         </label>
         <label>
           Last Name: <input value={lastName} onChange={handleChangeLast} />
-          <p>Is that right? {lastName}</p>
+          {/* <p>Is that right? {lastName}</p> */}
         </label>
         <br></br>
         {/* question with checkbox, checking attendance: */}
@@ -78,7 +89,7 @@ export default function App() {
         <button
           onClick={() => {
             guestList.push({});
-            setGuestList([fakeGuest[(0, 2)]]);
+            setGuestList([newGuest[(0, 2)]]);
           }}
         >
           Hit it!
@@ -86,14 +97,14 @@ export default function App() {
       </div>
       <p>Folks attending:</p>
       <ul>
-        {guestList.map((fakeGuest) => {
+        {guestList.map((newGuest) => {
           return (
             <li
-              key={fakeGuest.firstName}
-              key={fakeGuest.lastName}
-              key={fakeGuest.coming}
+              key={newGuest.firstName}
+              key={newGuest.lastName}
+              key={newGuest.coming}
             >
-              {fakeGuest.firstName} {fakeGuest.lastName}
+              {newGuest.firstName} {newGuest.lastName}
             </li>
           );
         })}
