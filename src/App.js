@@ -3,14 +3,6 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import logo from './images/pumpkin.png';
 
-// const newGuest = [
-//   { firstName: 'Johanna', lastName: 'Hume', coming: true },
-//   { firstName: 'Verena', lastName: 'Jungk', coming: true },
-//   { firstName: 'Michael', lastName: 'Wallner', coming: true },
-// ];
-
-// export default App;
-
 export default function App() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -22,12 +14,11 @@ export default function App() {
     const updatedFirstName = event.target.value;
     setFirstName(updatedFirstName);
   };
-  // const [lastName, setLastName] = useState('');
+
   const handleChangeLast = (e) => {
     const updatedLastName = e.target.value;
     setLastName(updatedLastName);
   };
-  // const [coming, setComing] = useState(false);
 
   const fetchGuests = async () => {
     const response = await fetch('https://pumpkinpieshalloween.herokuapp.com');
@@ -51,7 +42,6 @@ export default function App() {
         <br />
         <img src={logo} className="App-logo" alt="logo" />
       </header>
-
       <div className="App-form">
         <label>
           First Name:{' '}
@@ -60,7 +50,6 @@ export default function App() {
             value={firstName}
             onChange={handleChangeFirst}
           />
-          {/* <p>Is that right? {firstName}</p> */}
         </label>
         <label>
           Last Name:{' '}
@@ -69,28 +58,8 @@ export default function App() {
             value={lastName}
             onChange={handleChangeLast}
           />
-          {/* <p>Is that right? {lastName}</p> */}
         </label>
-        <br></br>
-        {/* question with checkbox, checking attendance: */}
-        {/* <label>
-          Are you coming?
-          <input
-            type="checkbox"
-            // 2. Connect the state variable to the controlled component
-            value="checked"
-            // 3. Change the state variable when the user interacts
-            onChange={(event) => setComing(event.currentTarget.checked)}
-          />
-        </label> */}
-        {/* Answers to whether the person is attending: */}
-        {/* <div>
-          Your answer:{' '}
-          {coming ? 'See you there!' : 'Sorry, I`m hanging someplace else.'}
-        </div> */}
-
         <br />
-
         <button
           className="App-button"
           onClick={() => {
@@ -121,6 +90,7 @@ export default function App() {
           Hit it!
         </button>
       </div>
+
       <div className="App-box">
         <p>Folks attending:</p>
         <ul>
@@ -186,4 +156,28 @@ export default function App() {
       </div>
     </div>
   );
+}
+{
+  /* question with checkbox, checking attendance: */
+}
+{
+  /* <label>
+          Are you coming?
+          <input
+            type="checkbox"
+            // 2. Connect the state variable to the controlled component
+            value="checked"
+            // 3. Change the state variable when the user interacts
+            onChange={(event) => setComing(event.currentTarget.checked)}
+          />
+        </label> */
+}
+{
+  /* Answers to whether the person is attending: */
+}
+{
+  /* <div>
+          Your answer:{' '}
+          {coming ? 'See you there!' : 'Sorry, I`m hanging someplace else.'}
+        </div> */
 }
