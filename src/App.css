@@ -33,15 +33,40 @@
 
 .App-form {
   background-color: darkorange;
-  min-height: 60vh;
-  min-width: 120vh;
+  min-height: 40vh;
+  min-width: 160vh;
   display: flex;
-  border-radius: 16px;
+  border-radius: 16px 16px 0px 0px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(15px + 2vmin);
   color: #00008f;
+}
+
+.App-input {
+  background-color: #61dafb;
+  color: #8f0058;
+  text-align: center;
+  display: block;
+  font-size: calc(10px + 2vmin);
+  border-radius: 50px;
+  height: 32px;
+  width: auto;
+  text-align-last: justify;
+}
+
+.App-box {
+  background-color: lightblue;
+  min-height: 80vh;
+  min-width: 160vh;
+  display: flex;
+  border-radius: 0px 0px 16px 16px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(18px + 2vmin);
+  color: #8f0058;
 }
 
 .App-link {
@@ -55,4 +80,25 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.App-button {
+  background-color: #61dafb;
+  color: #00008f;
+  text-align: center;
+  font-size: 30px;
+  border-radius: 50px;
+  height: 60px;
+  width: 240px;
+}
+
+.App-toggle {
+  background-color: #61dafb;
+  color: #00008f;
+  text-align: center;
+  font-size: calc(10px + 2vmin);
+  border-radius: 50px;
+  height: 32px;
+  width: auto;
+  text-align-last: justify;
 }

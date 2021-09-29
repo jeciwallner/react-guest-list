@@ -46,19 +46,29 @@ export default function App() {
       App-header"
       >
         <h1>Pumpkin Pie's Halloween Blowout</h1>
-        <br></br>
-        <br></br>
-        <br></br>
+        <br />
+        <br />
+        <br />
         <img src={logo} className="App-logo" alt="logo" />
       </header>
 
       <div className="App-form">
         <label>
-          First Name: <input value={firstName} onChange={handleChangeFirst} />
+          First Name:{' '}
+          <input
+            className="App-input"
+            value={firstName}
+            onChange={handleChangeFirst}
+          />
           {/* <p>Is that right? {firstName}</p> */}
         </label>
         <label>
-          Last Name: <input value={lastName} onChange={handleChangeLast} />
+          Last Name:{' '}
+          <input
+            className="App-input"
+            value={lastName}
+            onChange={handleChangeLast}
+          />
           {/* <p>Is that right? {lastName}</p> */}
         </label>
         <br></br>
@@ -82,6 +92,7 @@ export default function App() {
         <br />
 
         <button
+          className="App-button"
           onClick={() => {
             async function postGuest() {
               // language is json
@@ -110,64 +121,69 @@ export default function App() {
           Hit it!
         </button>
       </div>
-      <p>Folks attending:</p>
-      <ul>
-        {guestList.map((newGuest) => {
-          return (
-            <li key={newGuest.id}>
-              {newGuest.firstName} {newGuest.lastName}
-              {newGuest.attending
-                ? ' is going to bring the house down!'
-                : ' is hanging someplace else.'}
-              <button
-                onClick={() => {
-                  async function deleteGuest() {
-                    const response = await fetch(
-                      `https://pumpkinpieshalloween.herokuapp.com/${newGuest.id}`,
-                      {
-                        method: 'DELETE',
-                      },
-                    );
-                    const deletedGuest = await response.json();
-                    console.log(
-                      `https://pumpkinpieshalloween.herokuapp.com/${newGuest.id}`,
-                      deletedGuest,
-                    );
-                    fetchGuests();
-                  }
-                  deleteGuest();
-                }}
-              >
-                delete
-              </button>
-              <button
-                onClick={() => {
-                  async function updateGuest() {
-                    const response = await fetch(
-                      `https://pumpkinpieshalloween.herokuapp.com/${newGuest.id}`,
-                      {
-                        method: 'PATCH',
-                        headers: {
-                          'Content-Type': 'application/json',
+      <div className="App-box">
+        <p>Folks attending:</p>
+        <ul>
+          {guestList.map((newGuest) => {
+            return (
+              <li key={newGuest.id}>
+                {newGuest.firstName} {newGuest.lastName}
+                {newGuest.attending
+                  ? ' is going to bring the house down!'
+                  : ' is hanging someplace else.'}
+                <br />
+                <button
+                  className="App-toggle"
+                  onClick={() => {
+                    async function deleteGuest() {
+                      const response = await fetch(
+                        `https://pumpkinpieshalloween.herokuapp.com/${newGuest.id}`,
+                        {
+                          method: 'DELETE',
                         },
-                        // in this case ! means : do the opposite with booleans / do not what's in the variable
-                        body: JSON.stringify({
-                          attending: !newGuest.attending,
-                        }),
-                      },
-                    );
-                    const updatedGuest = await response.json();
-                    fetchGuests();
-                  }
-                  updateGuest();
-                }}
-              >
-                Are You Coming?
-              </button>
-            </li>
-          );
-        })}
-      </ul>
+                      );
+                      const deletedGuest = await response.json();
+                      console.log(
+                        `https://pumpkinpieshalloween.herokuapp.com/${newGuest.id}`,
+                        deletedGuest,
+                      );
+                      fetchGuests();
+                    }
+                    deleteGuest();
+                  }}
+                >
+                  delete
+                </button>
+                <button
+                  className="App-toggle"
+                  onClick={() => {
+                    async function updateGuest() {
+                      const response = await fetch(
+                        `https://pumpkinpieshalloween.herokuapp.com/${newGuest.id}`,
+                        {
+                          method: 'PATCH',
+                          headers: {
+                            'Content-Type': 'application/json',
+                          },
+                          // in this case ! means : do the opposite with booleans / do not what's in the variable
+                          body: JSON.stringify({
+                            attending: !newGuest.attending,
+                          }),
+                        },
+                      );
+                      const updatedGuest = await response.json();
+                      fetchGuests();
+                    }
+                    updateGuest();
+                  }}
+                >
+                  Are You Coming?
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     </div>
   );
 }
