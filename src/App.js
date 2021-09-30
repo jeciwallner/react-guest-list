@@ -1,11 +1,25 @@
 import './App.css';
-import axios from 'axios';
+import { Puff, useLoading } from '@agney/react-loading';
 import React, { useEffect, useState } from 'react';
 import logo from './images/pumpkin.png';
+
+// conditional rendering for spinning thingy?
+
+function Content() {
+  const { containerProps, indicatorEl } = useLoading({
+    loading: true,
+    indicator: <Puff width="50" />,
+  });
+
+  return <section {...containerProps}>{indicatorEl}</section>;
+}
 
 export default function App() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+
+  // useState for spinny thing
+  const [pageIsLoading, setPageIsLoading] = useState(true);
 
   // create a state with a hook:
   const [guestList, setGuestList] = useState([]);
@@ -29,9 +43,15 @@ export default function App() {
   // use Effect makes sure that anything that's inside gets reloaded when the page reloads
   useEffect(() => {
     fetchGuests();
+    // {
+    //   <input className="App-input" disabled />;
+    // }
+    setTimeout(() => setPageIsLoading(false), 5000);
   }, []);
+
   return (
     <div className="App">
+      {}
       <header
         className="
       App-header"
@@ -48,7 +68,9 @@ export default function App() {
           <input
             className="App-input"
             value={firstName}
+            // onClick, onChange etc need a function, this one is NOT calling another function, but passing the reference of one!
             onChange={handleChangeFirst}
+            // type="text" disabled? (setPageIsLoading === 'true' : null}
           />
         </label>
         <label>
@@ -59,9 +81,11 @@ export default function App() {
             onChange={handleChangeLast}
           />
         </label>
+
         <br />
         <button
           className="App-button"
+          // onCLick needs a function, this one is calling another one
           onClick={() => {
             async function postGuest() {
               // language is json
@@ -93,70 +117,81 @@ export default function App() {
 
       <div className="App-box">
         <p>Folks attending:</p>
-        <ul>
-          {guestList.map((newGuest) => {
-            return (
-              <li key={newGuest.id}>
-                {newGuest.firstName} {newGuest.lastName}
-                {newGuest.attending
-                  ? ' is going to bring the house down!'
-                  : ' is hanging someplace else.'}
-                <br />
-                <button
-                  className="App-toggle"
-                  onClick={() => {
-                    async function deleteGuest() {
-                      const response = await fetch(
-                        `https://pumpkinpieshalloween.herokuapp.com/${newGuest.id}`,
-                        {
-                          method: 'DELETE',
-                        },
-                      );
-                      const deletedGuest = await response.json();
-                      console.log(
-                        `https://pumpkinpieshalloween.herokuapp.com/${newGuest.id}`,
-                        deletedGuest,
-                      );
-                      fetchGuests();
-                    }
-                    deleteGuest();
-                  }}
-                >
-                  delete
-                </button>
-                <button
-                  className="App-toggle"
-                  onClick={() => {
-                    async function updateGuest() {
-                      const response = await fetch(
-                        `https://pumpkinpieshalloween.herokuapp.com/${newGuest.id}`,
-                        {
-                          method: 'PATCH',
-                          headers: {
-                            'Content-Type': 'application/json',
+
+        {pageIsLoading ? (
+          <Content />
+        ) : (
+          <ul>
+            {guestList.map((newGuest) => {
+              return (
+                <li key={newGuest.id}>
+                  {newGuest.firstName} {newGuest.lastName}
+                  {newGuest.attending
+                    ? ' is going to bring the house down!'
+                    : ' is hanging someplace else.'}
+                  <br />
+                  <button
+                    className="App-toggle"
+                    onClick={() => {
+                      async function deleteGuest() {
+                        const response = await fetch(
+                          `https://pumpkinpieshalloween.herokuapp.com/${newGuest.id}`,
+                          {
+                            method: 'DELETE',
                           },
-                          // in this case ! means : do the opposite with booleans / do not what's in the variable
-                          body: JSON.stringify({
-                            attending: !newGuest.attending,
-                          }),
-                        },
-                      );
-                      const updatedGuest = await response.json();
-                      fetchGuests();
-                    }
-                    updateGuest();
-                  }}
-                >
-                  Are You Coming?
-                </button>
-              </li>
-            );
-          })}
-        </ul>
+                        );
+                        const deletedGuest = await response.json();
+                        console.log(
+                          `https://pumpkinpieshalloween.herokuapp.com/${newGuest.id}`,
+                          deletedGuest,
+                        );
+                        fetchGuests();
+                      }
+                      deleteGuest();
+                    }}
+                  >
+                    delete
+                  </button>
+                  <button
+                    className="App-toggle"
+                    onClick={() => {
+                      async function updateGuest() {
+                        const response = await fetch(
+                          `https://pumpkinpieshalloween.herokuapp.com/${newGuest.id}`,
+                          {
+                            method: 'PATCH',
+                            headers: {
+                              'Content-Type': 'application/json',
+                            },
+                            // in this case ! means : do the opposite with booleans / do not what's in the variable
+                            body: JSON.stringify({
+                              attending: !newGuest.attending,
+                            }),
+                          },
+                        );
+                        const updatedGuest = await response.json();
+                        // Show the above variable in console.log to see what it does!
+                        // console.log('this is an identifier', updatedGuest);
+                        fetchGuests();
+                      }
+                      updateGuest();
+                    }}
+                  >
+                    Are You Coming?{' '}
+                    <span role="img" aria-label="Do come!!!" alt="party emoji">
+                      🥳
+                    </span>
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        )}
       </div>
     </div>
   );
 }
+
 {
   /* question with checkbox, checking attendance: */
 }
