@@ -159,15 +159,16 @@ export default function App() {
                             headers: {
                               'Content-Type': 'application/json',
                             },
-                            // in this case ! means : do the opposite with booleans / do not what's in the variable
                             body: JSON.stringify({
                               attending: !newGuest.attending,
                             }),
                           },
                         );
                         const updatedGuest = await response.json();
+                        console.log(updatedGuest);
                         fetchGuests();
                       }
+
                       updateGuest();
                     }}
                   >
