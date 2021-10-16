@@ -1,5 +1,5 @@
 .App {
-  background-color: #00008f;
+  background-color: #000040;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -21,7 +21,7 @@
 }
 
 .App-header {
-  background-color: #00008f;
+  background-color: #000040;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -41,7 +41,7 @@
   align-items: center;
   justify-content: center;
   font-size: calc(15px + 2vmin);
-  color: #00008f;
+  color: #000040;
 }
 
 .App-input {
@@ -53,7 +53,7 @@
   border-radius: 50px;
   height: 32px;
   width: 240px;
-  text-align-last: justify;
+  text-align-last: center;
 }
 
 .App-box {
@@ -84,7 +84,7 @@
 
 .App-button {
   background-color: #61dafb;
-  color: #00008f;
+  color: #000040;
   text-align: center;
   font-size: 30px;
   border-radius: 50px;
@@ -94,11 +94,11 @@
 
 .App-toggle {
   background-color: #61dafb;
-  color: #00008f;
+  color: #000040;
   text-align: center;
   font-size: calc(10px + 2vmin);
   border-radius: 50px;
-  height: 32px;
+  height: 40px;
   width: auto;
   text-align-last: justify;
 }

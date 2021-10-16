@@ -3,14 +3,11 @@ import { Puff, useLoading } from '@agney/react-loading';
 import React, { useEffect, useState } from 'react';
 import logo from './images/pumpkin.png';
 
-// conditional rendering for spinning thingy?
-
 function Content() {
   const { containerProps, indicatorEl } = useLoading({
     loading: true,
     indicator: <Puff width="50" />,
   });
-
   return <section {...containerProps}>{indicatorEl}</section>;
 }
 
@@ -18,10 +15,10 @@ export default function App() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
 
-  // useState for spinny thing
+  // useState for spinny thing:
   const [pageIsLoading, setPageIsLoading] = useState(true);
 
-  // create a state with a hook:
+  // useState with a hook:
   const [guestList, setGuestList] = useState([]);
 
   const handleChangeFirst = (event) => {
@@ -40,15 +37,13 @@ export default function App() {
     setGuestList(allGuests);
     console.log(allGuests);
   };
-  // use Effect makes sure that anything that's inside gets reloaded when the page reloads
+
   useEffect(() => {
     fetchGuests();
-    // {
-    //   <input className="App-input" disabled />;
-    // }
     setTimeout(() => setPageIsLoading(false), 5000);
   }, []);
 
+  // Spinning Pumpkin Image
   return (
     <div className="App">
       {}
@@ -62,62 +57,63 @@ export default function App() {
         <br />
         <img src={logo} className="App-logo" alt="logo" />
       </header>
-      <div className="App-form">
-        <label>
-          First Name:{' '}
-          <input
-            className="App-input"
-            value={firstName}
-            // onClick, onChange etc need a function, this one is NOT calling another function, but passing the reference of one!
-            onChange={handleChangeFirst}
-            // type="text" disabled? (setPageIsLoading === 'true' : null}
-          />
-        </label>
-        <label>
-          Last Name:{' '}
-          <input
-            className="App-input"
-            value={lastName}
-            onChange={handleChangeLast}
-          />
-        </label>
 
-        <br />
-        <button
-          className="App-button"
-          // onCLick needs a function, this one is calling another one
-          onClick={() => {
-            async function postGuest() {
-              // language is json
-              const response = await fetch(
-                `https://pumpkinpieshalloween.herokuapp.com`,
-                {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json',
+      {/* conditional rendering: input fields only displayed when page has finished loading! */}
+      {pageIsLoading ? (
+        <div>Page is Loading...</div>
+      ) : (
+        <div className="App-form">
+          <label>
+            First Name:{' '}
+            <input
+              className="App-input"
+              value={firstName}
+              onChange={handleChangeFirst}
+            />
+          </label>
+          <label>
+            Last Name:{' '}
+            <input
+              className="App-input"
+              value={lastName}
+              onChange={handleChangeLast}
+            />
+          </label>
+          <br />
+          <button
+            className="App-button"
+            onClick={() => {
+              async function postGuest() {
+                const response = await fetch(
+                  `https://pumpkinpieshalloween.herokuapp.com`,
+                  {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                      firstName: firstName,
+                      lastName: lastName,
+                    }),
                   },
-                  body: JSON.stringify({
-                    firstName: firstName,
-                    lastName: lastName,
-                  }),
-                },
-              );
-              const createdGuest = await response.json();
-              console.log(createdGuest);
-              fetchGuests();
-            }
-            postGuest();
-            setFirstName('');
-            setLastName('');
-          }}
-        >
-          Hit it!
-        </button>
-      </div>
-
+                );
+                const createdGuest = await response.json();
+                console.log(createdGuest);
+                fetchGuests();
+              }
+              postGuest();
+              setFirstName('');
+              setLastName('');
+            }}
+          >
+            Hit it!
+          </button>
+        </div>
+      )}
       <div className="App-box">
         <p>Folks attending:</p>
 
+        {/* conditional rendering: shows bloopy thing while loading and guests are only displayed when page has finished loading! */}
         {pageIsLoading ? (
           <Content />
         ) : (
@@ -150,7 +146,7 @@ export default function App() {
                       deleteGuest();
                     }}
                   >
-                    delete
+                    Remove Guest
                   </button>
                   <button
                     className="App-toggle"
@@ -170,8 +166,6 @@ export default function App() {
                           },
                         );
                         const updatedGuest = await response.json();
-                        // Show the above variable in console.log to see what it does!
-                        // console.log('this is an identifier', updatedGuest);
                         fetchGuests();
                       }
                       updateGuest();
@@ -190,29 +184,4 @@ export default function App() {
       </div>
     </div>
   );
-}
-
-{
-  /* question with checkbox, checking attendance: */
-}
-{
-  /* <label>
-          Are you coming?
-          <input
-            type="checkbox"
-            // 2. Connect the state variable to the controlled component
-            value="checked"
-            // 3. Change the state variable when the user interacts
-            onChange={(event) => setComing(event.currentTarget.checked)}
-          />
-        </label> */
-}
-{
-  /* Answers to whether the person is attending: */
-}
-{
-  /* <div>
-          Your answer:{' '}
-          {coming ? 'See you there!' : 'Sorry, I`m hanging someplace else.'}
-        </div> */
 }
