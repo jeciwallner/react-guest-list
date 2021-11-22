@@ -162,7 +162,11 @@ export default function App() {
                     }}
                   >
                     Are You Coming?{' '}
-                    <span role="img" aria-label="Do come!!!" alt="party emoji">
+                    <span
+                      role="img"
+                      aria-label="Please come!!!"
+                      alt="party emoji"
+                    >
                       🥳
                     </span>
                   </button>
