@@ -95,7 +95,7 @@ export default function App() {
                     }),
                   },
                 );
-                fetchGuests();
+                fetchGuests(response);
               }
               postGuest();
               setFirstName('');
@@ -132,7 +132,7 @@ export default function App() {
                             method: 'DELETE',
                           },
                         );
-                        fetchGuests();
+                        fetchGuests(response);
                       }
                       deleteGuest();
                     }}
@@ -155,7 +155,7 @@ export default function App() {
                             }),
                           },
                         );
-                        fetchGuests();
+                        fetchGuests(response);
                       }
 
                       updateGuest();
