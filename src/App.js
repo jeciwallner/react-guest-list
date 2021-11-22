@@ -35,18 +35,16 @@ export default function App() {
     const response = await fetch('https://pumpkinpieshalloween.herokuapp.com');
     const allGuests = await response.json();
     setGuestList(allGuests);
-    console.log(allGuests);
+    setPageIsLoading(false);
   };
 
   useEffect(() => {
     fetchGuests();
-    setTimeout(() => setPageIsLoading(false), 5000);
   }, []);
 
   // Spinning Pumpkin Image
   return (
     <div className="App">
-      {}
       <header
         className="
       App-header"
@@ -97,8 +95,6 @@ export default function App() {
                     }),
                   },
                 );
-                const createdGuest = await response.json();
-                console.log(createdGuest);
                 fetchGuests();
               }
               postGuest();
@@ -136,11 +132,6 @@ export default function App() {
                             method: 'DELETE',
                           },
                         );
-                        const deletedGuest = await response.json();
-                        console.log(
-                          `https://pumpkinpieshalloween.herokuapp.com/${newGuest.id}`,
-                          deletedGuest,
-                        );
                         fetchGuests();
                       }
                       deleteGuest();
@@ -164,8 +155,6 @@ export default function App() {
                             }),
                           },
                         );
-                        const updatedGuest = await response.json();
-                        console.log(updatedGuest);
                         fetchGuests();
                       }
 
