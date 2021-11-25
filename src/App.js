@@ -144,7 +144,7 @@ export default function App() {
                     onClick={() => {
                       async function updateGuest() {
                         const response = await fetch(
-                          `https://pumpkin-pies-guest-list.herokuapp.com/${newGuest.id}`,
+                          `https://pumpkinpieshalloween.herokuapp.com/${newGuest.id}`,
                           {
                             method: 'PATCH',
                             headers: {
