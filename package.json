@@ -48,7 +48,6 @@
     "@typescript-eslint/parser": "^5.2.0",
     "@upleveled/eslint-config-upleveled": "2.0.0",
     "@upleveled/eslint-plugin-upleveled": "^2.0.0",
-    
     "eslint-config-react-app": "^6.0.0",
     "eslint-import-resolver-typescript": "^2.5.0",
     "eslint-plugin-cypress": "^2.12.1",
